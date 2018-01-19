@@ -173,6 +173,10 @@ deliveries.forEach(function(delivery){
       delivery.commission.insurance=commission*(50/100);
       delivery.commission.treasury=Math.trunc(delivery.distance/500)+1;
       delivery.commission.convargo=(commission-delivery.commission.insurance-delivery.commission.treasury);
+      if(delivery.options.deductibleReduction)
+      {
+        delivery.price=delivery.price+delivery.volume;
+      }
       console.log(delivery.price);
       console.log("Commission insurance:"+delivery.commission.insurance);
       console.log("Commission treasury:"+delivery.commission.treasury);
