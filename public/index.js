@@ -154,7 +154,21 @@ deliveries.forEach(function(delivery){
   truckers.forEach(function(trucker){
     if(trucker.id==delivery.truckerId)
     {
-      delivery.price=trucker.pricePerKm*delivery.distance+trucker.pricePerVolume*delivery.volume;
+      if((delivery.volume>=5)&&(delivery.volume<10))
+      {
+        trucker.pricePerVolume=trucker.pricePerVolume*(90/100)
+
+      }
+      else if((delivery.volume>=10)&&(delivery.volume<25))
+      {
+        trucker.pricePerVolume=trucker.pricePerVolume*(70/100);
+      }
+      else if(delivery.volume>=25)
+      {
+        trucker.pricePerVolume=trucker.pricePerVolume*(50/100);
+      }
+
+      delivery.price=(trucker.pricePerKm*delivery.distance+trucker.pricePerVolume*delivery.volume);
       console.log(delivery.price);
     }
   });
