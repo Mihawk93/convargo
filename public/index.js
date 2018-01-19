@@ -176,11 +176,27 @@ deliveries.forEach(function(delivery){
       if(delivery.options.deductibleReduction)
       {
         delivery.price=delivery.price+delivery.volume;
+        delivery.commission.convargo=delivery.commission.convargo+delivery.volume;
       }
       console.log(delivery.price);
       console.log("Commission insurance:"+delivery.commission.insurance);
       console.log("Commission treasury:"+delivery.commission.treasury);
       console.log("Commission convargo:"+delivery.commission.convargo);
+      actors.forEach(function(actor){
+        if(actor.deliveryId==delivery.id)
+        {
+          actor.payment[0].amount=delivery.price;
+          actor.payment[1].amount=delivery.price*(70/100);
+          actor.payment[2].amount=delivery.commission.treasury;
+          actor.payment[3].amout=delivery.commission.insurance;
+          actor.payment[4].amout=delivery.commission.convargo;
+        }
+        console.log("Shipper must pay"+ actor.payment[0].amount);
+        console.log("The Trucker gain:"+actor.payment[1].amount);
+        console.log("The Treasury gain:"+actor.payment[2].amount);
+        console.log("The Insurance gain:"+actor.payment[3].amout);
+        console.log("The Convargo gain:"+actor.payment[4].amout);
+      });
     }
   });
 });
