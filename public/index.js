@@ -169,7 +169,14 @@ deliveries.forEach(function(delivery){
       }
 
       delivery.price=(trucker.pricePerKm*delivery.distance+trucker.pricePerVolume*delivery.volume);
+      var commission=delivery.price*(30/100);
+      delivery.commission.insurance=commission*(50/100);
+      delivery.commission.treasury=Math.trunc(delivery.distance/500)+1;
+      delivery.commission.convargo=(commission-delivery.commission.insurance-delivery.commission.treasury);
       console.log(delivery.price);
+      console.log("Commission insurance:"+delivery.commission.insurance);
+      console.log("Commission treasury:"+delivery.commission.treasury);
+      console.log("Commission convargo:"+delivery.commission.convargo);
     }
   });
 });
